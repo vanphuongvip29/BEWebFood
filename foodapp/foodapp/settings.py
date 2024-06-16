@@ -165,3 +165,8 @@ OAUTH2_INFO = {
     "client_id": "2mtyp2HsylLOoOdTT9wadaAtEmA7omvQGM3CigGn",
     "client_secret": "98UnOMm0dyVQ7OU3GzoizcGlyhPNlq9fqU5lZozAyBXiH1fudwrw7WnrAz7JItRuW2Qi9ozCcPS35jLZS2aiHlAb0fe18IBdjw2nCv5fYGFvwnLYXLejtS5R8biedUWs",
 }
+
+# reactjs
+OAUTH2_PROVIDER = {
+    "OAUTH2_BACKEND_CLASS": "oauth2_provider.oauth2_backends.JSONOAuthLibCore"
+}

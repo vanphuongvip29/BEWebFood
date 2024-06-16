@@ -28,7 +28,7 @@ class AuthInfo(APIView):
 class UserViewSet(
     viewsets.ViewSet,
     generics.CreateAPIView,
-    generics.RetrieveAPIView,
+    # generics.RetrieveAPIView
 ):
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
@@ -37,9 +37,13 @@ class UserViewSet(
     ]
 
     def get_permissions(self):
-        if self.action == "retrieve":
+        if self.action == "current_user":
             return [permissions.IsAuthenticated()]
         return [permissions.AllowAny()]
+
+    @action(methods=["get"], detail=False, url_path="current-user")
+    def current_user(self, request):
+        return Response(self.serializer_class(request.user).data)
 
 
 class Pagination(PageNumberPagination):
