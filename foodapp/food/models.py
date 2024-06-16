@@ -52,3 +52,19 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Comment(models.Model):
+    content = models.CharField(max_length=100, unique=True)
+    food_detail_comment = models.ForeignKey(
+        FoodDetail, related_name="foof_detail_comment", on_delete=models.CASCADE
+    )
+    user = models.ForeignKey("User", on_delete=models.CASCADE)
+    updated_date = models.DateTimeField(auto_now=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_date"]
+
+    def __str__(self):
+        return self.content

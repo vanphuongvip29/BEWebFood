@@ -10,8 +10,9 @@ from .serializers import (
     UserSerializer,
     CategorySerializer,
     TagSerializer,
+    CommentSerializer,
 )
-from .models import Food, FoodDetail, User, Category, Tag
+from .models import Food, FoodDetail, User, Category, Tag, Comment
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
@@ -151,3 +152,8 @@ class TagViewSet(
 ):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+
+
+class CommentViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.ListAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer

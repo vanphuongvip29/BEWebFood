@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
-from .models import Food, Tag, FoodDetail, User, Category
+from .models import Food, Tag, FoodDetail, User, Category, Comment
 from rest_framework import serializers
 
 
@@ -82,3 +82,9 @@ class UserSerializer(ModelSerializer):
         u.set_password(validated_data["password"])
         u.save()
         return u
+
+
+class CommentSerializer(ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = "__all__"
