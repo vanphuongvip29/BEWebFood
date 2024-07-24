@@ -7,11 +7,9 @@ from food.admin import admin_site
 
 routers = routers.DefaultRouter()
 routers.register("foods", views.FoodViewSet)
-routers.register("fooddetails", views.FoodDetailViewSet)
 routers.register("users", views.UserViewSet)
 routers.register("categorys", views.CategoryViewSet, basename="category")
 routers.register("tags", views.TagViewSet, basename="tag")
-routers.register("comments", views.CommentViewSet, basename="comment")
 
 
 urlpatterns = [

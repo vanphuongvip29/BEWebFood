@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
-from .models import Food, Tag, FoodDetail, User, Category, Comment
+from .models import Food, Tag, User, Category
 from rest_framework import serializers
 
 
@@ -16,30 +16,7 @@ class TagSerializer(ModelSerializer):
         fields = ["id", "name"]
 
 
-class FoodDetailSerializer(ModelSerializer):
-    # many = True vì có nhiều object
-    tags = TagSerializer(many=True)
-
-    image_path = SerializerMethodField()
-
-    def get_image_path(self, img):
-
-        name = img.image.name
-        if name.startswith("static/"):
-            path = "http://127.0.0.1:8000/%s" % name
-
-        else:
-            path = "http://127.0.0.1:8000/static/%s" % name
-
-        return path
-
-    class Meta:
-        model = FoodDetail
-        fields = ["id", "name", "content", "created_date", "food", "image_path", "tags"]
-
-
 class FoodSerializer(ModelSerializer):
-    food_detail = FoodDetailSerializer(many=True)
     image_path = serializers.SerializerMethodField(source="image")
 
     def get_image_path(self, obj):
@@ -58,7 +35,6 @@ class FoodSerializer(ModelSerializer):
             "category",
             "image_path",
             "active",
-            "food_detail",
         ]
 
 
@@ -82,9 +58,3 @@ class UserSerializer(ModelSerializer):
         u.set_password(validated_data["password"])
         u.save()
         return u
-
-
-class CommentSerializer(ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = "__all__"

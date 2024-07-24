@@ -6,13 +6,11 @@ from rest_framework.filters import OrderingFilter
 
 from .serializers import (
     FoodSerializer,
-    FoodDetailSerializer,
     UserSerializer,
     CategorySerializer,
     TagSerializer,
-    CommentSerializer,
 )
-from .models import Food, FoodDetail, User, Category, Tag, Comment
+from .models import Food, User, Category, Tag
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
@@ -111,20 +109,6 @@ class FoodViewSet(viewsets.ModelViewSet):
 
         return query
 
-    # Lấy fooddetail of food
-    @action(methods=["get"], detail=True, url_name="food-fooddetail")
-    def food_fooddetail(self, request, pk):
-        # try:
-        f = Food.objects.get(pk=pk)
-        fd = f.food_detail.filter(active=True)
-
-        # except Food.DoesNotExist:
-        #     return Response(status=status.HTTP_400_BAD_REQUEST)
-        return Response(
-            data=FoodDetailSerializer(fd, many=True).data,
-            status=status.HTTP_200_OK,
-        )
-
     @action(methods=["post"], detail=True, url_path="hide-food")
     def hide_food(self, request, pk):
         try:
@@ -139,16 +123,6 @@ class FoodViewSet(viewsets.ModelViewSet):
         )
 
 
-class FoodDetailViewSet(
-    viewsets.ViewSet,
-    generics.ListAPIView,
-    generics.CreateAPIView,
-    generics.DestroyAPIView,
-):
-    queryset = FoodDetail.objects.filter(active=True)
-    serializer_class = FoodDetailSerializer
-
-
 class TagViewSet(
     viewsets.ViewSet,
     generics.ListAPIView,
@@ -156,8 +130,3 @@ class TagViewSet(
 ):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-
-
-class CommentViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.ListAPIView):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer

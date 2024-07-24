@@ -33,18 +33,9 @@ class IteamBase(models.Model):
 class Food(IteamBase):
     description = models.TextField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-
-
-class FoodDetail(IteamBase):
-    content = RichTextField()
-    food = models.ForeignKey(Food, related_name="food_detail", on_delete=models.CASCADE)
-
     tags = models.ManyToManyField(
         "Tag", related_name="tags_detail", blank=True, null=True
     )
-
-    class Meta:
-        unique_together = ("name", "food")
 
 
 class Tag(models.Model):
@@ -54,17 +45,20 @@ class Tag(models.Model):
         return self.name
 
 
-class Comment(models.Model):
-    content = models.CharField(max_length=100, unique=True)
-    food_detail_comment = models.ForeignKey(
-        FoodDetail, related_name="foof_detail_comment", on_delete=models.CASCADE
-    )
-    user = models.ForeignKey("User", on_delete=models.CASCADE)
-    updated_date = models.DateTimeField(auto_now=True)
-    created_date = models.DateTimeField(auto_now_add=True)
+# class Comment(models.Model):
+#     content = models.CharField(max_length=100, unique=True)
+#     # food_comment = models.ForeignKey(
+#     #     Food, related_name="f_comment", on_delete=models.CASCADE, null=True
+#     # )
+#     user = models.ForeignKey("User", on_delete=models.CASCADE)
+#     updated_date = models.DateTimeField(auto_now=True)
+#     created_date = models.DateTimeField(auto_now_add=True)
+#     food_comment = models.ForeignKey(
+#         Food, related_name="food_comment", on_delete=models.CASCADE
+#     )
 
-    class Meta:
-        ordering = ["-created_date"]
+#     class Meta:
+#         ordering = ["-created_date"]
 
-    def __str__(self):
-        return self.content
+#     def __str__(self):
+#         return self.content
